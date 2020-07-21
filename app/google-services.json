@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "557430454440",
+    "firebase_url": "https://work-login-multi-role.firebaseio.com",
+    "project_id": "work-login-multi-role",
+    "storage_bucket": "work-login-multi-role.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:557430454440:android:1602d16e2e3c956f776a9d",
+        "android_client_info": {
+          "package_name": "com.suncode.loginapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "557430454440-6s6po8530semj0585kac83avadbl5h9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suncode.loginapp",
+            "certificate_hash": "4ee547df616aec8ffae8d3740623f4ed37c180af"
+          }
+        },
+        {
+          "client_id": "557430454440-o9s47o3vq7kfh9ntt0ouumr64s66a9me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRxu2FrLl0pqV3jh87sD0LPNO4662cOao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "557430454440-o9s47o3vq7kfh9ntt0ouumr64s66a9me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
