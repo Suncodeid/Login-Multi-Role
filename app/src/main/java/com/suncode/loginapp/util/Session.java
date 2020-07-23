@@ -15,17 +15,19 @@ public class Session {
         editor = preferences.edit();
     }
 
-    public void setupSessionAdmin(User Admin) {
-        editor.putString(Constant.KEY_SESSION_ADMIN_NAME, Admin.getName());
-        editor.putInt(Constant.KEY_SESSION_ADMIN_TAG, Admin.getTag());
-        editor.putInt(Constant.KEY_IS_LOGIN, Admin.getTag());
+    public void setupSessionAdmin(User admin) {
+        editor.putString(Constant.KEY_SESSION_ADMIN_NAME, admin.getName());
+        editor.putInt(Constant.KEY_SESSION_ADMIN_TAG, admin.getTag());
+        editor.putInt(Constant.KEY_IS_LOGIN,admin.getTag());
+        editor.putString(Constant.KEY_UID, admin.getuId());
         editor.commit();
     }
 
-    public void setupSessionUser(User User) {
-        editor.putString(Constant.KEY_SESSION_USER_NAME, User.getName());
-        editor.putInt(Constant.KEY_SESSION_USER_TAG, User.getTag());
-        editor.putInt(Constant.KEY_IS_LOGIN, User.getTag());
+    public void setupSessionUser(User user) {
+        editor.putString(Constant.KEY_SESSION_USER_NAME, user.getName());
+        editor.putInt(Constant.KEY_SESSION_USER_TAG, user.getTag());
+        editor.putInt(Constant.KEY_IS_LOGIN, user.getTag());
+        editor.putString(Constant.KEY_UID, user.getuId());
         editor.commit();
     }
 

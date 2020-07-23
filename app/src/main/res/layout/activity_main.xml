@@ -39,6 +39,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"/>
+
+        <ProgressBar
+            android:id="@+id/progresLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </LinearLayout>

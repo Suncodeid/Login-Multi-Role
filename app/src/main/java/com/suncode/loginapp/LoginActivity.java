@@ -1,20 +1,14 @@
 package com.suncode.loginapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,6 +24,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
     private EditText mEmail;
     private EditText mPassword;
     private Button mLoginButton;
+    private ProgressBar mProgressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +34,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mLoginButton = findViewById(R.id.login);
+        mProgressbar = findViewById(R.id.progresLogin);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +57,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
                 }
             }
         });
+        checkUserLogin(mSession.getPreferences().getInt(Constant.KEY_IS_LOGIN, 0));
     }
 
     private void getFireStoreData(String idUser) {
@@ -69,8 +66,8 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    int userTag = document.getLong("tag").intValue();
-                    saveSession(idUser, userTag, document);
+                    long userTag = document.getLong("tag").intValue();
+                    saveSession(idUser, (int) userTag, document);
                 } else {
                     Log.d("gagal", "Documment tidak ada");
                 }
@@ -83,11 +80,11 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
     // Save Session
     private void saveSession(String uid, int userTag, DocumentSnapshot documentSnapshot) {
         if (userTag == 1) {
-            User userAdmin = new User();
-            userAdmin.setName(documentSnapshot.getString("name"));
-            userAdmin.setTag(documentSnapshot.getLong("tag").intValue());
-            userAdmin.setuId(uid);
-            mSession.setupSessionAdmin(userAdmin);
+            User admin = new User();
+            admin.setName(documentSnapshot.getString("name"));
+            admin.setTag(documentSnapshot.getLong("tag").intValue());
+            admin.setuId(uid);
+            mSession.setupSessionAdmin(admin);
 
         } else if (userTag == 2) {
             User user = new User();
@@ -96,7 +93,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
             user.setuId(uid);
             mSession.setupSessionUser(user);
         }
-        checkUserLogin(mSession.getPreferences().getInt(Constant.KEY_IS_LOGIN,0));
+        checkUserLogin(mSession.getPreferences().getInt(Constant.KEY_IS_LOGIN, 0));
     }
 
     private void getAuthFirebase(String userEmail, String userPassword) {
@@ -104,7 +101,6 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
             task.addOnFailureListener(LoginActivity.this, e -> onFailedAuthFirebase());
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                assert firebaseUser != null;
                 onSuccessAuthFirebase(firebaseUser.getUid());
             } else {
                 onFailedAuthFirebase();
@@ -114,6 +110,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
 
     private void checkUserLogin(int cekPengguna) {
         onHideProgress();
+        if (cekPengguna != 0){
             if (cekPengguna == 1) {
                 Intent j = new Intent(LoginActivity.this, ActivityOne.class);
                 startActivity(j);
@@ -122,6 +119,7 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
                 Intent i = new Intent(LoginActivity.this, ActivityTwo.class);
                 startActivity(i);
                 finish();
+            }
         }
     }
 
@@ -132,16 +130,16 @@ public class LoginActivity extends BaseActivity implements LoginViewCallback {
 
     @Override
     public void onFailedAuthFirebase() {
-
+        showToast("Gagal Login");
     }
 
     @Override
     public void onShowProgress() {
-
+        mProgressbar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onHideProgress() {
-
+        mProgressbar.setVisibility(View.GONE);
     }
 }

@@ -37,5 +37,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           APP_FOLDER: app
-          RELEASE_TITLE: Animize Release v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
+          RELEASE_TITLE: LoginApp Release v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
           OUTPUT_FOLDER: build/outputs/apk/ima/debug

@@ -17,7 +17,6 @@ public class BaseActivity extends AppCompatActivity {
     protected BaseActivity mActivity;
     protected Session mSession;
     protected FirebaseAuth firebaseAuth;
-    protected FirebaseUser firebaseUser;
     protected FirebaseFirestore firebaseFirestore;
 
     @Override
@@ -43,7 +42,12 @@ public class BaseActivity extends AppCompatActivity {
         return mSession.getPreferences().getString(Constant.KEY_UID, "");
     }
 
+
     protected String getUserName() {
         return mSession.getPreferences().getString(Constant.KEY_SESSION_USER_NAME, "");
+    }
+
+    protected String getUserNameAdmin() {
+        return mSession.getPreferences().getString(Constant.KEY_SESSION_ADMIN_NAME, "");
     }
 }
