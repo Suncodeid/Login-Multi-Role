@@ -1,4 +1,4 @@
-name: Login App
+name: Android CI
 
 on:
   push:
@@ -23,19 +23,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Install NDK
-        run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;21.0.6113669" --sdk_root=${ANDROID_SDK_ROOT}
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Get short SHA
-        id: slug
-        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-      - name: Releasing using Hub
-        uses: konteru/action-release-debugapk@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          APP_FOLDER: app
-          RELEASE_TITLE: LoginApp Release v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
-          OUTPUT_FOLDER: build/outputs/apk/ima/debug
